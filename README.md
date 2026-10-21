@@ -5,6 +5,34 @@ databases.
 This extension is also intended to serve as an example how to write an
 archive service for WeeWX.
 
+## Contents
+
+* [Why should I use this extension?](#why_should_i_use_this_extension)
+* [Prerequisites](#prerequisites)
+* [Installation instructions](#installation_instructions)
+* [Configuration instructions](#configuration_instructions)
+* [Usage](#usage)
+* [Notes for developers](#notes_for_developers)
+* [Links](#links)
+
+## Why should I use this extension?
+
+You are using additional hardware and sensors, that provide a lot of
+observation types, that are not included in the standard database of
+WeeWX?
+
+You want to structure your data into separate databases instead of 
+saving them all to the same file?
+
+You are developing a WeeWX extension for additional hardware and want
+to save their measurements to a separate database?
+
+You do not want to add columns to the standard database of WeeWX by
+`weectl database add-column ...` for some reason? One good reason
+may be, that it is a lot of columns.
+
+Then this extension may be a solution or an inspiration for you.
+
 ## Prerequisites
 
 WeeWX from version 5.6 on is required.
@@ -37,6 +65,10 @@ WeeWX from version 5.6 on is required.
 
 3) configure databases
 
+   You need a schema, that describes the columns and daily summaries
+   structure of the database you want to save into. And you have to
+   set up a binding and a database section for your database in 
+   `weewx.conf`.
    See [Configuration instructions](#configuration_instructions) for
    details.
 
@@ -58,8 +90,10 @@ WeeWX from version 5.6 on is required.
 
 ## Configuration instructions
 
+### Abstract
+
 In general you will want to use this extension to save observation types
-that are not included in the standard `wview_extended` schema. That may
+that are not included in the standard `wview_extended` schema. That may be
 due to some additional data sources or measuring instruments. A data
 service (typically installed as an extension) provides the measurements
 of that source or instrument. This extension saves the measurements to
@@ -69,6 +103,8 @@ You may argue that you could simply save them by adding new columns to the
 standard database of WeeWX. This is true for some single observation types, 
 but if your service provides lots of additional observation types you may 
 want to save them to a separate database. 
+
+### Configuration example
 
 The following example shows the principle, how the setup looks like.
 Adapt it to your needs.
@@ -81,8 +117,16 @@ reason we can use it here for our example. Among those additional
 observation types is `solarAzimuth` and `solarAltitude`. Say, we want to
 graph them, and therefore we need to have them in a database.
 
-First we need a *schema* for our database. A schema is a dictionary holding
-2 keys, one for the list of columns and one for list of daily summary
+Of course, you will have other observation types, and typically they will
+represent meteorological measurements. And again typically you would
+use this extension for a big amount of values, not only 2. But to explain 
+configuration, we need an example, that you can easily test yourself. So, 
+please, accept those non-meteorological values for this purpose.
+
+#### Schema
+
+First we need a schema for our database. A schema is a dictionary holding
+2 keys, one for the list of columns and one for the list of daily summary
 tables. For our example with 2 observation types it looks like this:
 
 ```Python
@@ -110,6 +154,8 @@ Save it to a file, say `additional.py` into the `schemas` directory.
 > [!CAUTION]
 > Please note that the schema is only observed while creating the database.
 > Afterwards it is ignored.
+
+#### Data binding
 
 Next step is to edit `weewx.conf`. Our database is represented there by
 a binding section and a database section. It looks like this:
@@ -139,6 +185,8 @@ a binding section and a database section. It looks like this:
         ...
 
 ```
+
+Replace "astro" by some reasonable word for your use case.
 
 The entry `savetoadditionalarchive = true` marks the bindings that are to
 save by this extension. 
