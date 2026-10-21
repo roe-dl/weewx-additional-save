@@ -7,12 +7,12 @@ archive service for WeeWX.
 
 ## Contents
 
-* [Why should I use this extension?](#why_should_i_use_this_extension)
+* [Why should I use this extension?](#why-should-i-use-this-extension)
 * [Prerequisites](#prerequisites)
-* [Installation instructions](#installation_instructions)
-* [Configuration instructions](#configuration_instructions)
+* [Installation instructions](#installation-instructions)
+* [Configuration instructions](#configuration-instructions)
 * [Usage](#usage)
-* [Notes for developers](#notes_for_developers)
+* [Notes for developers](#notes-for-developers)
 * [Links](#links)
 
 ## Why should I use this extension?
