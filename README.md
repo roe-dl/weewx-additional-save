@@ -69,7 +69,7 @@ WeeWX from version 5.6 on is required.
    structure of the database you want to save into. And you have to
    set up a binding and a database section for your database in 
    `weewx.conf`.
-   See [Configuration instructions](#configuration_instructions) for
+   See [Configuration instructions](#configuration-instructions) for
    details.
 
 4) restart weewx
